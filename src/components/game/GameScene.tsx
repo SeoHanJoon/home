@@ -142,16 +142,16 @@ export function GameScene() {
       <group position={[4, 0, -3]}>
         <DiningTable />
       </group>
-      {/* 2층침대: 안방 (x∈[-7,-3.5]) 중앙 */}
-      <group position={[-5.25, 0, 3]}>
+      {/* 2층침대: 안방 — 세로 배치 (긴 축이 z) */}
+      <group position={[-5.25, 0, 3]} rotation={[0, Math.PI / 2, 0]}>
         <BunkBed />
       </group>
-      {/* 컴퓨터책상: 침실 (x∈[0,7]) 상단 우측 */}
+      {/* 컴퓨터책상: 침실 동쪽 벽 끝 */}
       <group position={[6.0, 0, 0.55]} rotation={[0, Math.PI, 0]}>
         <ComputerDesk />
       </group>
-      {/* 침대: 침실 하단 중앙 */}
-      <group position={[3.5, 0, 4.5]}>
+      {/* 침대: 침실 — 가로 배치 (긴 축이 x) */}
+      <group position={[3.5, 0, 4.5]} rotation={[0, Math.PI / 2, 0]}>
         <Bed />
       </group>
     </>

@@ -136,7 +136,7 @@ export const ALL_COLLISION_BOXES: CollisionBox[] = [
   { minX: -7.2, maxX: -6.0, minZ: -3.9, maxZ: -2.1 }, // 주방싱크대
   { minX: -4.1, maxX: -2.9, minZ: -5.3, maxZ: -4.3 }, // 냉장고
   { minX: 2.4, maxX: 5.6, minZ: -4.2, maxZ: -1.8 },   // 거실식탁
-  { minX: -6.7, maxX: -3.8, minZ: 2.3, maxZ: 3.7 },   // 2층침대
+  { minX: -5.9, maxX: -4.6, minZ: 1.6, maxZ: 4.4 },   // 2층침대 (세로, x=1.3 z=2.8)
   { minX: 5.2, maxX: 6.8, minZ: 0.15, maxZ: 0.95 },   // 컴퓨터책상
-  { minX: 2.7, maxX: 4.3, minZ: 3.4, maxZ: 5.7 },     // 침대
+  { minX: 2.35, maxX: 4.65, minZ: 3.74, maxZ: 5.26 },  // 침대 (가로, x=2.3 z=1.52)
 ]
