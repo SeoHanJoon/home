@@ -9,7 +9,7 @@ export const INTERACTION_RADIUS = 2.2
 export const FURNITURE_CONFIGS: FurnitureConfig[] = [
   {
     id: 'kitchen-sink',
-    position: [-6.3, 0, -3],
+    position: [-6.5, 0, -3],
     rotation: [0, Math.PI / 2, 0],
     label: '주방 싱크대',
     interactionRadius: INTERACTION_RADIUS,
@@ -22,7 +22,7 @@ export const FURNITURE_CONFIGS: FurnitureConfig[] = [
   },
   {
     id: 'refrigerator',
-    position: [-3, 0, -5.5],
+    position: [-3.5, 0, -4.8],
     rotation: [0, 0, 0],
     label: '냉장고',
     interactionRadius: INTERACTION_RADIUS,
@@ -56,8 +56,8 @@ export const FURNITURE_CONFIGS: FurnitureConfig[] = [
   },
   {
     id: 'bunk-bed',
-    position: [-4.5, 0, 3],
-    rotation: [0, Math.PI / 2, 0],
+    position: [-5.25, 0, 3],
+    rotation: [0, 0, 0],
     label: '2층 침대',
     interactionRadius: INTERACTION_RADIUS,
     content: {
@@ -72,7 +72,7 @@ export const FURNITURE_CONFIGS: FurnitureConfig[] = [
   },
   {
     id: 'computer-desk',
-    position: [3.5, 0, 2],
+    position: [4.5, 0, 1.5],
     rotation: [0, Math.PI, 0],
     label: '컴퓨터 책상',
     interactionRadius: INTERACTION_RADIUS,
@@ -106,28 +106,38 @@ export const FURNITURE_CONFIGS: FurnitureConfig[] = [
 ]
 
 // ── Collision Boxes ────────────────────────────────────────────────────────────
+//
+// House layout (top-down, Three.js coords):
+//   Upper open area:       x∈[-7,7],    z∈[-6,0]
+//   안방 (2층침대):        x∈[-7,-3.5], z∈[0,6]
+//   Central (sealed):      x∈[-3.5,0],  z∈[0,6]  ← inaccessible
+//   침실 (desk+bed):       x∈[0,7],     z∈[0,6]
+//   Left doorway (→안방):  x∈[-5,-3.5] at z=0
+//   Right doorway (→침실): x∈[0,1.5]   at z=0
 
 export const ALL_COLLISION_BOXES: CollisionBox[] = [
-  // Outer walls
-  { minX: -7.4, maxX: -1.1, minZ: -6.4, maxZ: -5.8 }, // North-left (door gap at -1 to 1)
+  // ── Outer walls ──────────────────────────────────────────────────────────────
+  { minX: -7.4, maxX: -1.1, minZ: -6.4, maxZ: -5.8 }, // North-left (나가는문 gap at x∈[-1,1])
   { minX: 1.1, maxX: 7.4, minZ: -6.4, maxZ: -5.8 },   // North-right
   { minX: -7.4, maxX: 7.4, minZ: 5.8, maxZ: 6.4 },    // South
   { minX: -7.4, maxX: -6.8, minZ: -6.4, maxZ: 6.4 },  // West
   { minX: 6.8, maxX: 7.4, minZ: -6.4, maxZ: 6.4 },    // East
 
-  // Middle horizontal wall (z=0), doorways at x∈[-4.5,-3] and x∈[1,2.5]
-  { minX: -7.0, maxX: -4.5, minZ: -0.25, maxZ: 0.25 },
-  { minX: -3.0, maxX: 1.0, minZ: -0.25, maxZ: 0.25 },
-  { minX: 2.5, maxX: 7.0, minZ: -0.25, maxZ: 0.25 },
+  // ── Middle horizontal wall (z=0) ─────────────────────────────────────────────
+  // Doorways: left x∈[-5,-3.5], right x∈[0,1.5]
+  { minX: -7.0, maxX: -5.0, minZ: -0.25, maxZ: 0.25 }, // left segment
+  { minX: -3.5, maxX: 0.0, minZ: -0.25, maxZ: 0.25 },  // center segment
+  { minX: 1.5, maxX: 7.0, minZ: -0.25, maxZ: 0.25 },   // right segment
 
-  // Inner vertical wall (x=-2), divides 안방 from 침실 corridor
-  { minX: -2.25, maxX: -1.75, minZ: 0.0, maxZ: 6.4 },
+  // ── Inner vertical walls (lower section) ──────────────────────────────────────
+  { minX: -3.7, maxX: -3.3, minZ: 0.0, maxZ: 6.4 }, // x=-3.5: right wall of 안방
+  { minX: -0.2, maxX: 0.2, minZ: 0.0, maxZ: 6.4 },  // x=0:    left wall of 침실
 
-  // Furniture
-  { minX: -7.2, maxX: -5.5, minZ: -3.9, maxZ: -2.1 }, // 주방싱크대
-  { minX: -3.6, maxX: -2.4, minZ: -6.1, maxZ: -4.8 }, // 냉장고
-  { minX: 2.7, maxX: 5.3, minZ: -4.1, maxZ: -2.0 },   // 거실식탁 (incl chairs)
-  { minX: -5.5, maxX: -3.5, minZ: 1.8, maxZ: 4.2 },   // 2층침대
-  { minX: 2.5, maxX: 5.0, minZ: 1.0, maxZ: 3.0 },     // 컴퓨터책상
-  { minX: 2.5, maxX: 5.0, minZ: 3.4, maxZ: 5.8 },     // 침대
+  // ── Furniture ─────────────────────────────────────────────────────────────────
+  { minX: -7.2, maxX: -6.0, minZ: -3.9, maxZ: -2.1 }, // 주방싱크대 (rotated, near west wall)
+  { minX: -4.1, maxX: -2.9, minZ: -5.3, maxZ: -4.3 }, // 냉장고
+  { minX: 2.4, maxX: 5.6, minZ: -4.2, maxZ: -1.8 },   // 거실식탁 (chairs included)
+  { minX: -6.3, maxX: -4.2, minZ: 2.5, maxZ: 3.5 },   // 2층침대
+  { minX: 3.5, maxX: 6.5, minZ: 0.9, maxZ: 2.1 },     // 컴퓨터책상
+  { minX: 2.7, maxX: 4.3, minZ: 3.4, maxZ: 5.7 },     // 침대
 ]

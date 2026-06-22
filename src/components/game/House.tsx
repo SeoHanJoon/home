@@ -41,15 +41,21 @@ export function House() {
         <meshStandardMaterial color={FLOOR_COLOR} roughness={0.9} />
       </mesh>
 
-      {/* 안방 floor (slightly different tone) */}
-      <mesh position={[-4.5, -0.1, 3]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-        <planeGeometry args={[5.4, 6.2]} />
+      {/* 안방 floor x∈[-7,-3.5] z∈[0,6] */}
+      <mesh position={[-5.25, -0.1, 3]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+        <planeGeometry args={[3.5, 6.0]} />
         <meshStandardMaterial color={FLOOR_ROOM} roughness={0.9} />
       </mesh>
 
-      {/* 침실 + 복도 floor */}
-      <mesh position={[2.5, -0.1, 3]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-        <planeGeometry args={[9.4, 6.2]} />
+      {/* Central sealed area floor x∈[-3.5,0] z∈[0,6] — darker, inaccessible */}
+      <mesh position={[-1.75, -0.1, 3]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+        <planeGeometry args={[3.5, 6.0]} />
+        <meshStandardMaterial color='#2a1e12' roughness={0.95} />
+      </mesh>
+
+      {/* 침실 floor x∈[0,7] z∈[0,6] */}
+      <mesh position={[3.5, -0.1, 3]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+        <planeGeometry args={[7.0, 6.0]} />
         <meshStandardMaterial color={FLOOR_COLOR} roughness={0.9} />
       </mesh>
 
@@ -72,18 +78,19 @@ export function House() {
       <Wall position={[7.2, 1.5, 0]} size={[0.38, 3.0, 12.8]} />
 
       {/* ── MIDDLE HORIZONTAL WALL (z=0) ────────────────── */}
-      {/* Left segment: x ∈ [-7, -4.5] */}
-      <Wall position={[-5.75, 1.5, 0]} size={[2.5, 3.0, 0.32]} />
+      {/* Left doorway: x∈[-5,-3.5] → 안방  Right doorway: x∈[0,1.5] → 침실 */}
+      {/* Left segment: x∈[-7,-5] */}
+      <Wall position={[-6.0, 1.5, 0]} size={[2.0, 3.0, 0.32]} />
+      {/* Center segment: x∈[-3.5,0] (above sealed central area) */}
+      <Wall position={[-1.75, 1.5, 0]} size={[3.5, 3.0, 0.32]} />
+      {/* Right segment: x∈[1.5,7] */}
+      <Wall position={[4.25, 1.5, 0]} size={[5.5, 3.0, 0.32]} />
 
-      {/* Center segment: x ∈ [-3, 1] */}
-      <Wall position={[-1.0, 1.5, 0]} size={[4.0, 3.0, 0.32]} />
-
-      {/* Right segment: x ∈ [2.5, 7] */}
-      <Wall position={[4.75, 1.5, 0]} size={[4.5, 3.0, 0.32]} />
-
-      {/* ── INNER VERTICAL WALL (x=-2) ─────────────────── */}
-      {/* Separates 안방 (left) from 침실/복도 (right), z ∈ [0, 6.2] */}
-      <Wall position={[-2.0, 1.5, 3.1]} size={[0.32, 3.0, 6.2]} />
+      {/* ── INNER VERTICAL WALLS (lower section) ──────── */}
+      {/* x=-3.5: right wall of 안방 / left wall of sealed central, z∈[0,6.2] */}
+      <Wall position={[-3.5, 1.5, 3.1]} size={[0.32, 3.0, 6.2]} />
+      {/* x=0: right wall of sealed central / left wall of 침실, z∈[0,6.2] */}
+      <Wall position={[0.0, 1.5, 3.1]} size={[0.32, 3.0, 6.2]} />
 
       {/* ── SKIRTING BOARDS (decorative trim) ────────────── */}
       <Wall position={[-7.06, 0.12, 0]} size={[0.06, 0.24, 12.4]} color={SKIRTING} />
@@ -104,17 +111,25 @@ export function House() {
         <meshStandardMaterial color={SKIRTING} roughness={0.7} />
       </mesh>
 
-      {/* ── CEILING EDGE TRIM ─────────────────────────────── */}
+      {/* ── CEILING PANELS (dark) ─────────────────────────── */}
+      {/* 거실/주방 ceiling */}
       <mesh position={[0, 3.02, -3]} rotation={[-Math.PI / 2, 0, 0]}>
         <planeGeometry args={[14.4, 6.0]} />
         <meshStandardMaterial color='#1a1210' roughness={1.0} side={THREE.BackSide} />
       </mesh>
-      <mesh position={[-4.5, 3.02, 3]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[5.0, 6.0]} />
+      {/* 안방 ceiling x∈[-7,-3.5] */}
+      <mesh position={[-5.25, 3.02, 3]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[3.5, 6.0]} />
         <meshStandardMaterial color='#1a1210' roughness={1.0} side={THREE.BackSide} />
       </mesh>
-      <mesh position={[2.5, 3.02, 3]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[9.0, 6.0]} />
+      {/* Central sealed ceiling x∈[-3.5,0] */}
+      <mesh position={[-1.75, 3.02, 3]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[3.5, 6.0]} />
+        <meshStandardMaterial color='#0e0c08' roughness={1.0} side={THREE.BackSide} />
+      </mesh>
+      {/* 침실 ceiling x∈[0,7] */}
+      <mesh position={[3.5, 3.02, 3]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[7.0, 6.0]} />
         <meshStandardMaterial color='#1a1210' roughness={1.0} side={THREE.BackSide} />
       </mesh>
     </group>

@@ -78,7 +78,7 @@ export function GameScene() {
     const isMoving = dx !== 0 || dz !== 0
 
     if (isMoving) {
-      rotRef.current = Math.atan2(dx, -dz)
+      rotRef.current = Math.atan2(dx, dz)
     }
 
     store.setPlayerState(posRef.current.x, posRef.current.z, rotRef.current, isMoving)
@@ -130,21 +130,27 @@ export function GameScene() {
       <CameraController />
 
       {/* Furniture */}
-      <group position={[-6.3, 0, -3]} rotation={[0, Math.PI / 2, 0]}>
+      {/* 주방싱크대: 서쪽 벽, 상단 오픈 공간 중앙 */}
+      <group position={[-6.5, 0, -3]} rotation={[0, Math.PI / 2, 0]}>
         <KitchenSink />
       </group>
-      <group position={[-3, 0, -5.5]}>
+      {/* 냉장고: 상단 오픈 공간 좌측 내부 */}
+      <group position={[-3.5, 0, -4.8]}>
         <Refrigerator />
       </group>
+      {/* 거실식탁: 상단 오픈 공간 우측 */}
       <group position={[4, 0, -3]}>
         <DiningTable />
       </group>
-      <group position={[-4.5, 0, 3]} rotation={[0, Math.PI / 2, 0]}>
+      {/* 2층침대: 안방 (x∈[-7,-3.5]) 중앙 */}
+      <group position={[-5.25, 0, 3]}>
         <BunkBed />
       </group>
-      <group position={[3.5, 0, 2]} rotation={[0, Math.PI, 0]}>
+      {/* 컴퓨터책상: 침실 (x∈[0,7]) 상단 우측 */}
+      <group position={[4.5, 0, 1.5]} rotation={[0, Math.PI, 0]}>
         <ComputerDesk />
       </group>
+      {/* 침대: 침실 하단 중앙 */}
       <group position={[3.5, 0, 4.5]}>
         <Bed />
       </group>
