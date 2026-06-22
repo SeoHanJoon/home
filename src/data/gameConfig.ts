@@ -108,36 +108,40 @@ export const FURNITURE_CONFIGS: FurnitureConfig[] = [
 // ── Collision Boxes ────────────────────────────────────────────────────────────
 //
 // House layout (top-down, Three.js coords):
-//   Upper open area:       x∈[-7,7],    z∈[-6,0]
-//   안방 (2층침대):        x∈[-7,-3.5], z∈[0,6]
-//   Central (sealed):      x∈[-3.5,0],  z∈[0,6]  ← inaccessible
-//   침실 (desk+bed):       x∈[0,7],     z∈[0,6]
-//   Left doorway (→안방):  x∈[-5,-3.5] at z=0
-//   Right doorway (→침실): x∈[0,1.5]   at z=0
+//   거실/주방:  x∈[-7,7],    z∈[-6,0]   ← upper open area
+//   안방:       x∈[-7,-3.5], z∈[0,6]    ← 2층침대
+//   복도:       x∈[-3.5,0],  z∈[0,6]    ← corridor hub
+//   침실:       x∈[0,7],     z∈[0,6]    ← 컴퓨터책상 + 침대
+//
+//   거실→복도:  x∈[-3.5,0]  at z=0      (중간 벽 문)
+//   안방↔복도:  x=-3.5       at z∈[2,4] (측벽 문)
+//   침실↔복도:  x=0          at z∈[2,4] (측벽 문)
 
 export const ALL_COLLISION_BOXES: CollisionBox[] = [
-  // ── Outer walls ──────────────────────────────────────────────────────────────
-  { minX: -7.4, maxX: -1.1, minZ: -6.4, maxZ: -5.8 }, // North-left (나가는문 gap at x∈[-1,1])
+  // ── Outer walls ───────────────────────────────────────────────────────────────
+  { minX: -7.4, maxX: -1.1, minZ: -6.4, maxZ: -5.8 }, // North-left (나가는문 gap x∈[-1,1])
   { minX: 1.1, maxX: 7.4, minZ: -6.4, maxZ: -5.8 },   // North-right
   { minX: -7.4, maxX: 7.4, minZ: 5.8, maxZ: 6.4 },    // South
   { minX: -7.4, maxX: -6.8, minZ: -6.4, maxZ: 6.4 },  // West
   { minX: 6.8, maxX: 7.4, minZ: -6.4, maxZ: 6.4 },    // East
 
-  // ── Middle horizontal wall (z=0) ─────────────────────────────────────────────
-  // Doorways: left x∈[-5,-3.5], right x∈[0,1.5]
-  { minX: -7.0, maxX: -5.0, minZ: -0.25, maxZ: 0.25 }, // left segment
-  { minX: -3.5, maxX: 0.0, minZ: -0.25, maxZ: 0.25 },  // center segment
-  { minX: 1.5, maxX: 7.0, minZ: -0.25, maxZ: 0.25 },   // right segment
+  // ── Middle horizontal wall (z=0): doorway x∈[-3.5,0] → 복도 ─────────────────
+  { minX: -7.0, maxX: -3.5, minZ: -0.25, maxZ: 0.25 }, // left segment
+  { minX: 0.0, maxX: 7.0, minZ: -0.25, maxZ: 0.25 },   // right segment
 
-  // ── Inner vertical walls (lower section) ──────────────────────────────────────
-  { minX: -3.7, maxX: -3.3, minZ: 0.0, maxZ: 6.4 }, // x=-3.5: right wall of 안방
-  { minX: -0.2, maxX: 0.2, minZ: 0.0, maxZ: 6.4 },  // x=0:    left wall of 침실
+  // ── x=-3.5 wall: 안방 east / 복도 west  (door at z∈[2,4]) ────────────────────
+  { minX: -3.7, maxX: -3.3, minZ: 0.0, maxZ: 2.0 },
+  { minX: -3.7, maxX: -3.3, minZ: 4.0, maxZ: 6.4 },
+
+  // ── x=0 wall: 복도 east / 침실 west  (door at z∈[2,4]) ───────────────────────
+  { minX: -0.2, maxX: 0.2, minZ: 0.0, maxZ: 2.0 },
+  { minX: -0.2, maxX: 0.2, minZ: 4.0, maxZ: 6.4 },
 
   // ── Furniture ─────────────────────────────────────────────────────────────────
-  { minX: -7.2, maxX: -6.0, minZ: -3.9, maxZ: -2.1 }, // 주방싱크대 (rotated, near west wall)
+  { minX: -7.2, maxX: -6.0, minZ: -3.9, maxZ: -2.1 }, // 주방싱크대
   { minX: -4.1, maxX: -2.9, minZ: -5.3, maxZ: -4.3 }, // 냉장고
-  { minX: 2.4, maxX: 5.6, minZ: -4.2, maxZ: -1.8 },   // 거실식탁 (chairs included)
-  { minX: -6.3, maxX: -4.2, minZ: 2.5, maxZ: 3.5 },   // 2층침대
+  { minX: 2.4, maxX: 5.6, minZ: -4.2, maxZ: -1.8 },   // 거실식탁 (의자 포함)
+  { minX: -6.3, maxX: -4.2, minZ: 2.3, maxZ: 3.7 },   // 2층침대
   { minX: 3.5, maxX: 6.5, minZ: 0.9, maxZ: 2.1 },     // 컴퓨터책상
   { minX: 2.7, maxX: 4.3, minZ: 3.4, maxZ: 5.7 },     // 침대
 ]
