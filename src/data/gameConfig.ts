@@ -72,7 +72,7 @@ export const FURNITURE_CONFIGS: FurnitureConfig[] = [
   },
   {
     id: 'computer-desk',
-    position: [4.5, 0, 1.5],
+    position: [6.0, 0, 0.55],
     rotation: [0, Math.PI, 0],
     label: '컴퓨터 책상',
     interactionRadius: INTERACTION_RADIUS,
@@ -137,6 +137,6 @@ export const ALL_COLLISION_BOXES: CollisionBox[] = [
   { minX: -4.1, maxX: -2.9, minZ: -5.3, maxZ: -4.3 }, // 냉장고
   { minX: 2.4, maxX: 5.6, minZ: -4.2, maxZ: -1.8 },   // 거실식탁
   { minX: -6.3, maxX: -4.2, minZ: 2.3, maxZ: 3.7 },   // 2층침대
-  { minX: 3.5, maxX: 6.5, minZ: 0.9, maxZ: 2.1 },     // 컴퓨터책상
+  { minX: 5.2, maxX: 6.8, minZ: 0.15, maxZ: 0.95 },   // 컴퓨터책상
   { minX: 2.7, maxX: 4.3, minZ: 3.4, maxZ: 5.7 },     // 침대
 ]

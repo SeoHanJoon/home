@@ -147,7 +147,7 @@ export function GameScene() {
         <BunkBed />
       </group>
       {/* 컴퓨터책상: 침실 (x∈[0,7]) 상단 우측 */}
-      <group position={[4.5, 0, 1.5]} rotation={[0, Math.PI, 0]}>
+      <group position={[6.0, 0, 0.55]} rotation={[0, Math.PI, 0]}>
         <ComputerDesk />
       </group>
       {/* 침대: 침실 하단 중앙 */}
