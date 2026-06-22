@@ -125,12 +125,12 @@ export const ALL_COLLISION_BOXES: CollisionBox[] = [
   { minX: 6.8, maxX: 7.4, minZ: -6.4, maxZ: 6.4 },    // East
 
   // ── Middle horizontal wall (z=0) ──────────────────────────────────────────────
-  // 안방 문: x∈[-5.5,-2]  침실 문: x∈[-2,0]  (x=-2 is dividing wall post)
-  { minX: -7.0, maxX: -5.5, minZ: -0.25, maxZ: 0.25 }, // left solid
-  { minX: 0.0, maxX: 7.0, minZ: -0.25, maxZ: 0.25 },   // right solid
+  // 안방 문: x∈[-2.5,0]  침실 문: x∈[0,2.5]  (x=0 is dividing wall post)
+  { minX: -7.0, maxX: -2.5, minZ: -0.25, maxZ: 0.25 }, // left solid
+  { minX: 2.5, maxX: 7.0, minZ: -0.25, maxZ: 0.25 },   // right solid
 
-  // ── Dividing wall: x=-2, z∈[0,6] (안방 / 침실 경계, 문 없음) ─────────────────
-  { minX: -2.16, maxX: -1.84, minZ: 0.0, maxZ: 6.4 },
+  // ── Dividing wall: x=0, z∈[0,6] (안방 / 침실 경계, 문 없음) ──────────────────
+  { minX: -0.16, maxX: 0.16, minZ: 0.0, maxZ: 6.4 },
 
   // ── Furniture ─────────────────────────────────────────────────────────────────
   { minX: -7.2, maxX: -6.0, minZ: -3.9, maxZ: -2.1 }, // 주방싱크대

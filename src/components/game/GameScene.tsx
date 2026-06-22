@@ -121,8 +121,8 @@ export function GameScene() {
       />
       {/* Room point lights */}
       <pointLight position={[0, 2.8, -3]}   intensity={0.5} color='#fffbe8' /> {/* 거실 */}
-      <pointLight position={[-4.5, 2.8, 3]} intensity={0.4} color='#fff5d8' /> {/* 안방 */}
-      <pointLight position={[2.5, 2.8, 3]}  intensity={0.4} color='#fff5d8' /> {/* 침실 */}
+      <pointLight position={[-3.5, 2.8, 3]} intensity={0.4} color='#fff5d8' /> {/* 안방 */}
+      <pointLight position={[3.5, 2.8, 3]}  intensity={0.4} color='#fff5d8' /> {/* 침실 */}
 
       {/* Scene */}
       <House />

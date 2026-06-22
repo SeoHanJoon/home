@@ -27,7 +27,6 @@ function Wall({
   )
 }
 
-// Thin door jamb post
 function Jamb({ x, y, z, w, h, d }: { x: number; y: number; z: number; w: number; h: number; d: number }) {
   return (
     <mesh position={[x, y, z]} castShadow>
@@ -47,15 +46,15 @@ export function House() {
         <meshStandardMaterial color={FLOOR_LIVING} roughness={0.9} />
       </mesh>
 
-      {/* 안방: x∈[-7,-2], z∈[0,6], center=(-4.5, 3) */}
-      <mesh position={[-4.5, -0.1, 3]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-        <planeGeometry args={[5.0, 6.0]} />
+      {/* 안방: x∈[-7,0], z∈[0,6], center=(-3.5, 3) */}
+      <mesh position={[-3.5, -0.1, 3]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+        <planeGeometry args={[7.0, 6.0]} />
         <meshStandardMaterial color={FLOOR_BEDROOM} roughness={0.9} />
       </mesh>
 
-      {/* 침실: x∈[-2,7], z∈[0,6], center=(2.5, 3) */}
-      <mesh position={[2.5, -0.1, 3]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-        <planeGeometry args={[9.0, 6.0]} />
+      {/* 침실: x∈[0,7], z∈[0,6], center=(3.5, 3) */}
+      <mesh position={[3.5, -0.1, 3]} rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
+        <planeGeometry args={[7.0, 6.0]} />
         <meshStandardMaterial color={FLOOR_ROOM2} roughness={0.9} />
       </mesh>
 
@@ -73,33 +72,33 @@ export function House() {
       <Wall position={[7.2, 1.5, 0]} size={[0.38, 3.0, 12.8]} />
 
       {/* ── MIDDLE HORIZONTAL WALL (z=0) ───────────────────────────────────── */}
-      {/* 안방 문: x∈[-5.5,-2]  침실 문: x∈[-2,0]  (x=-2 = dividing wall post) */}
-      {/* Left solid: x∈[-7,-5.5] */}
-      <Wall position={[-6.25, 1.5, 0]} size={[1.5, 3.0, 0.32]} />
-      {/* Right solid: x∈[0,7] */}
-      <Wall position={[3.5, 1.5, 0]}   size={[7.0, 3.0, 0.32]} />
+      {/* 안방 문: x∈[-2.5,0]  침실 문: x∈[0,2.5]  (x=0 = dividing wall post) */}
+      {/* Left solid: x∈[-7,-2.5], center=(-4.75), width=4.5 */}
+      <Wall position={[-4.75, 1.5, 0]} size={[4.5, 3.0, 0.32]} />
+      {/* Right solid: x∈[2.5,7], center=(4.75), width=4.5 */}
+      <Wall position={[4.75, 1.5, 0]}  size={[4.5, 3.0, 0.32]} />
 
-      {/* ── DIVIDING WALL: x=-2, z∈[0,6] (안방 | 침실, 문 없음) ───────────── */}
-      <Wall position={[-2.0, 1.5, 3.0]} size={[0.32, 3.0, 6.0]} />
+      {/* ── DIVIDING WALL: x=0, z∈[0,6] (안방 | 침실, 문 없음) ─────────────── */}
+      <Wall position={[0.0, 1.5, 3.0]} size={[0.32, 3.0, 6.0]} />
 
       {/* ── DOOR JAMBS ─────────────────────────────────────────────────────── */}
       {/* 나가는문 jambs */}
       <Jamb x={-1.12} y={1.3} z={-6.1} w={0.12} h={2.6} d={0.44} />
       <Jamb x={ 1.12} y={1.3} z={-6.1} w={0.12} h={2.6} d={0.44} />
 
-      {/* 안방 문 jambs (left side x=-5.5, right side = dividing wall at x=-2) */}
-      <Jamb x={-5.5} y={1.3} z={0.0} w={0.12} h={2.6} d={0.44} />
-      {/* x=-2 post is provided by dividing wall itself */}
-
-      {/* 침실 문 right jamb x=0 (left jamb = dividing wall at x=-2) */}
-      <Jamb x={0.0} y={1.3} z={0.0} w={0.12} h={2.6} d={0.44} />
+      {/* 안방 문 outer jamb: x=-2.5 */}
+      <Jamb x={-2.5} y={1.3} z={0.0} w={0.12} h={2.6} d={0.44} />
+      {/* 침실 문 outer jamb: x=2.5 */}
+      <Jamb x={ 2.5} y={1.3} z={0.0} w={0.12} h={2.6} d={0.44} />
+      {/* Shared center post (dividing wall front face at z=0) */}
+      <Jamb x={0.0} y={1.3} z={0.0} w={0.44} h={2.6} d={0.12} />
 
       {/* ── SKIRTING BOARDS ─────────────────────────────────────────────────── */}
-      <Wall position={[-7.06, 0.12, 0]}   size={[0.06, 0.24, 12.4]} color={SKIRTING} />
-      <Wall position={[7.06, 0.12, 0]}    size={[0.06, 0.24, 12.4]} color={SKIRTING} />
-      <Wall position={[0, 0.12, 6.06]}    size={[14.4, 0.24, 0.06]} color={SKIRTING} />
-      <Wall position={[-4.2, 0.12, -6.06]} size={[6.0, 0.24, 0.06]} color={SKIRTING} />
-      <Wall position={[4.2, 0.12, -6.06]}  size={[6.0, 0.24, 0.06]} color={SKIRTING} />
+      <Wall position={[-7.06, 0.12, 0]}    size={[0.06, 0.24, 12.4]} color={SKIRTING} />
+      <Wall position={[7.06, 0.12, 0]}     size={[0.06, 0.24, 12.4]} color={SKIRTING} />
+      <Wall position={[0, 0.12, 6.06]}     size={[14.4, 0.24, 0.06]} color={SKIRTING} />
+      <Wall position={[-4.2, 0.12, -6.06]} size={[6.0, 0.24, 0.06]}  color={SKIRTING} />
+      <Wall position={[4.2, 0.12, -6.06]}  size={[6.0, 0.24, 0.06]}  color={SKIRTING} />
 
       {/* ── CEILING ──────────────────────────────────────────────────────────── */}
       {/* 거실/주방 */}
@@ -108,13 +107,13 @@ export function House() {
         <meshStandardMaterial color={CEIL} roughness={1.0} side={THREE.BackSide} />
       </mesh>
       {/* 안방 */}
-      <mesh position={[-4.5, 3.02, 3]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[5.0, 6.0]} />
+      <mesh position={[-3.5, 3.02, 3]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[7.0, 6.0]} />
         <meshStandardMaterial color={CEIL} roughness={1.0} side={THREE.BackSide} />
       </mesh>
       {/* 침실 */}
-      <mesh position={[2.5, 3.02, 3]} rotation={[-Math.PI / 2, 0, 0]}>
-        <planeGeometry args={[9.0, 6.0]} />
+      <mesh position={[3.5, 3.02, 3]} rotation={[-Math.PI / 2, 0, 0]}>
+        <planeGeometry args={[7.0, 6.0]} />
         <meshStandardMaterial color={CEIL} roughness={1.0} side={THREE.BackSide} />
       </mesh>
     </group>
