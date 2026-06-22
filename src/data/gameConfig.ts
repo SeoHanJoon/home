@@ -56,7 +56,7 @@ export const FURNITURE_CONFIGS: FurnitureConfig[] = [
   },
   {
     id: 'bunk-bed',
-    position: [-0.85, 0, 3],
+    position: [-5.9, 0, 2.0],
     rotation: [0, -Math.PI / 2, 0],
     label: '2층 침대',
     interactionRadius: INTERACTION_RADIUS,
@@ -136,7 +136,7 @@ export const ALL_COLLISION_BOXES: CollisionBox[] = [
   { minX: -7.2, maxX: -6.0, minZ: -3.9, maxZ: -2.1 }, // 주방싱크대
   { minX: -4.1, maxX: -2.9, minZ: -5.3, maxZ: -4.3 }, // 냉장고
   { minX: 2.4, maxX: 5.6, minZ: -4.2, maxZ: -1.8 },   // 거실식탁
-  { minX: -1.5, maxX: -0.2, minZ: 1.6, maxZ: 4.4 },   // 2층침대 (우측 벽, 세로)
+  { minX: -6.8, maxX: -5.0, minZ: 0.15, maxZ: 3.85 }, // 2층침대 (서쪽+북쪽 벽, 세로 3.6×1.8)
   { minX: 5.2, maxX: 6.8, minZ: 0.15, maxZ: 0.95 },   // 컴퓨터책상
   { minX: 4.5, maxX: 6.8, minZ: 3.74, maxZ: 5.26 },   // 침대 (우측 벽, 가로)
 ]
