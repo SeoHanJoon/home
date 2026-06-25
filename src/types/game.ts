@@ -20,4 +20,9 @@ export interface FurnitureConfig {
   label: string
   interactionRadius: number
   content: ModalContent
+  /** Optional fixed camera view that overrides the generic room-centre algorithm */
+  cameraView?: {
+    position: [number, number, number]
+    lookAt: [number, number, number]
+  }
 }

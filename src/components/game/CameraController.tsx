@@ -27,22 +27,26 @@ export function CameraController() {
       if (config) {
         const [fx, fy, fz] = config.position
 
-        // Ideal view: place camera VIEW_DIST units from the furniture in the
-        // direction toward the room centre (0,0,0), at VIEW_HEIGHT above it.
-        // This gives a consistent angle regardless of where the player stood,
-        // and the camera never needs to pass through the character.
-        dirTemp.current.set(-fx, 0, -fz)
-        const len = dirTemp.current.length()
-        if (len > 0) dirTemp.current.divideScalar(len)
-
-        camTarget.current.set(
-          fx + dirTemp.current.x * VIEW_DIST,
-          fy + VIEW_HEIGHT,
-          fz + dirTemp.current.z * VIEW_DIST,
-        )
-
-        camera.position.lerp(camTarget.current, ZOOM_LERP)
-        camera.lookAt(fx, fy + 0.8, fz)
+        if (config.cameraView) {
+          // Use hand-crafted view for furniture that needs a specific angle
+          const [cx, cy, cz] = config.cameraView.position
+          const [lx, ly, lz] = config.cameraView.lookAt
+          camTarget.current.set(cx, cy, cz)
+          camera.position.lerp(camTarget.current, ZOOM_LERP)
+          camera.lookAt(lx, ly, lz)
+        } else {
+          // Generic: place camera VIEW_DIST units toward room centre, VIEW_HEIGHT above
+          dirTemp.current.set(-fx, 0, -fz)
+          const len = dirTemp.current.length()
+          if (len > 0) dirTemp.current.divideScalar(len)
+          camTarget.current.set(
+            fx + dirTemp.current.x * VIEW_DIST,
+            fy + VIEW_HEIGHT,
+            fz + dirTemp.current.z * VIEW_DIST,
+          )
+          camera.position.lerp(camTarget.current, ZOOM_LERP)
+          camera.lookAt(fx, fy + 0.8, fz)
+        }
         return
       }
     }

@@ -76,6 +76,12 @@ export const FURNITURE_CONFIGS: FurnitureConfig[] = [
     rotation: [0, Math.PI, 0],
     label: '컴퓨터 책상',
     interactionRadius: INTERACTION_RADIUS,
+    // Monitor screen is at world (6.0, 1.22, 0.31), facing -z.
+    // Camera sits south of the screen at eye level, looking straight at it.
+    cameraView: {
+      position: [6.0, 1.4, 2.2],
+      lookAt:   [6.0, 1.1, 0.31],
+    },
     content: {
       emoji: '💻',
       title: 'Work Experience',
