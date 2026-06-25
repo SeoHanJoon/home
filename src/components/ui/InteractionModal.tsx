@@ -55,7 +55,7 @@ export function InteractionModal() {
           borderRadius: '2px',
           padding: '44px 48px 40px 52px',
           fontFamily: "Georgia, 'Times New Roman', serif",
-          animation: 'paperSlideUp 0.42s cubic-bezier(0.16,1,0.3,1) 0.35s both',
+          animation: 'paperSlideUp 0.75s cubic-bezier(0.16,1,0.3,1) 0.35s both',
         }}
         onClick={(e) => e.stopPropagation()}
       >
