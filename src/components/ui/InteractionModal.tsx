@@ -46,7 +46,7 @@ export function InteractionModal() {
           width: 'min(500px, 88vw)',
           maxHeight: '82vh',
           overflowY: 'auto',
-          background: 'linear-gradient(160deg, #fefaf2 0%, #f8f0e0 100%)',
+          backgroundColor: '#fdf6e8',
           backgroundImage: PAPER_LINES,
           backgroundSize: '100% 32px',
           backgroundPositionY: '112px',
@@ -55,7 +55,7 @@ export function InteractionModal() {
           borderRadius: '2px',
           padding: '44px 48px 40px 52px',
           fontFamily: "Georgia, 'Times New Roman', serif",
-          animation: 'paperDrop 0.38s cubic-bezier(0.16,1,0.3,1) forwards',
+          animation: 'paperSlideUp 0.42s cubic-bezier(0.16,1,0.3,1) forwards',
         }}
         onClick={(e) => e.stopPropagation()}
       >
