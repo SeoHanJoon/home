@@ -3,9 +3,17 @@
 import { useGameStore } from '@/store/gameStore'
 import { FURNITURE_CONFIGS } from '@/data/gameConfig'
 
+const PAPER_LINES = `repeating-linear-gradient(
+  to bottom,
+  transparent 0px,
+  transparent 31px,
+  rgba(100,120,200,0.11) 31px,
+  rgba(100,120,200,0.11) 32px
+)`
+
 export function InteractionModal() {
   const activeModal = useGameStore((s) => s.activeModal)
-  const closeModal = useGameStore((s) => s.closeModal)
+  const closeModal  = useGameStore((s) => s.closeModal)
 
   if (!activeModal) return null
 
@@ -15,160 +23,175 @@ export function InteractionModal() {
   const { content } = furniture
 
   return (
+    /* Dim overlay */
     <div
       style={{
         position: 'fixed',
         inset: 0,
+        zIndex: 20,
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'rgba(0,0,0,0.65)',
-        zIndex: 20,
-        backdropFilter: 'blur(2px)',
+        background: 'rgba(8,5,2,0.58)',
+        backdropFilter: 'blur(4px)',
+        animation: 'dimIn 0.4s ease forwards',
       }}
       onClick={closeModal}
     >
+      {/* Paper card */}
       <div
+        key={activeModal}
         style={{
-          background: '#1a1410',
-          border: '2px solid #c8a464',
-          borderRadius: '12px',
-          width: 'min(520px, 90vw)',
-          maxHeight: '80vh',
+          position: 'relative',
+          width: 'min(500px, 88vw)',
+          maxHeight: '82vh',
           overflowY: 'auto',
-          boxShadow: '0 0 40px rgba(180,140,60,0.18)',
-          animation: 'modalSlideIn 0.22s ease',
+          background: 'linear-gradient(160deg, #fefaf2 0%, #f8f0e0 100%)',
+          backgroundImage: PAPER_LINES,
+          backgroundSize: '100% 32px',
+          backgroundPositionY: '112px',
+          boxShadow:
+            '0 1px 2px rgba(0,0,0,0.12), 0 6px 20px rgba(0,0,0,0.2), 0 24px 56px rgba(0,0,0,0.25)',
+          borderRadius: '2px',
+          padding: '44px 48px 40px 52px',
+          fontFamily: "Georgia, 'Times New Roman', serif",
+          animation: 'paperDrop 0.38s cubic-bezier(0.16,1,0.3,1) forwards',
         }}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header */}
-        <div
+        {/* Red margin line */}
+        <div style={{
+          position: 'absolute',
+          left: '40px', top: 0, bottom: 0,
+          width: '2px',
+          background: 'rgba(210,70,70,0.28)',
+          pointerEvents: 'none',
+        }} />
+
+        {/* Fold corner */}
+        <div style={{
+          position: 'absolute',
+          top: 0, right: 0,
+          width: 0, height: 0,
+          borderStyle: 'solid',
+          borderWidth: '0 30px 30px 0',
+          borderColor: 'transparent rgba(180,155,110,0.45) transparent transparent',
+        }} />
+
+        {/* Close button */}
+        <button
+          onClick={closeModal}
           style={{
-            borderBottom: '1px solid rgba(200,164,100,0.25)',
-            padding: '18px 22px 14px',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'space-between',
+            position: 'absolute',
+            top: '14px',
+            right: '38px',
+            background: 'none',
+            border: 'none',
+            fontSize: '22px',
+            color: '#a08060',
+            cursor: 'pointer',
+            lineHeight: 1,
+            padding: '2px 6px',
           }}
         >
-          <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-            <span style={{ fontSize: '28px' }}>{content.emoji}</span>
-            <div>
-              <div
+          ×
+        </button>
+
+        {/* Emoji */}
+        <div style={{ fontSize: '36px', marginBottom: '10px', lineHeight: 1 }}>
+          {content.emoji}
+        </div>
+
+        {/* Title */}
+        <div style={{
+          fontSize: '24px',
+          fontWeight: 700,
+          color: '#1e1408',
+          letterSpacing: '-0.01em',
+          marginBottom: '4px',
+          lineHeight: 1.2,
+        }}>
+          {content.title}
+        </div>
+
+        {/* Subtitle */}
+        <div style={{
+          fontSize: '13px',
+          color: '#907858',
+          fontStyle: 'italic',
+          marginBottom: '22px',
+        }}>
+          {content.subtitle}
+        </div>
+
+        {/* Ink divider */}
+        <div style={{
+          height: '1px',
+          background: 'rgba(60,40,20,0.2)',
+          marginBottom: '22px',
+        }} />
+
+        {/* Body — line-height 2 matches 32px paper lines */}
+        <pre style={{
+          fontFamily: "Georgia, 'Times New Roman', serif",
+          fontSize: '14.5px',
+          color: '#2a1c0c',
+          lineHeight: 2.2,
+          whiteSpace: 'pre-wrap',
+          margin: 0,
+        }}>
+          {content.body}
+        </pre>
+
+        {/* Links */}
+        {content.links && content.links.length > 0 && (
+          <div style={{
+            marginTop: '24px',
+            display: 'flex',
+            flexWrap: 'wrap',
+            gap: '10px',
+          }}>
+            {content.links.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                target='_blank'
+                rel='noopener noreferrer'
                 style={{
-                  fontSize: '18px',
-                  fontWeight: 700,
-                  color: '#f5e8c8',
-                  fontFamily: 'monospace',
-                  letterSpacing: '0.04em',
+                  display: 'inline-block',
+                  padding: '6px 16px',
+                  background: 'rgba(40,24,8,0.07)',
+                  border: '1px solid rgba(60,40,20,0.25)',
+                  borderRadius: '2px',
+                  color: '#5c3d18',
+                  fontFamily: "Georgia, serif",
+                  fontSize: '13px',
+                  textDecoration: 'none',
+                  letterSpacing: '0.02em',
+                  transition: 'background 0.15s',
                 }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.background = 'rgba(40,24,8,0.13)')
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.background = 'rgba(40,24,8,0.07)')
+                }
               >
-                {content.title}
-              </div>
-              <div
-                style={{
-                  fontSize: '12px',
-                  color: '#a89070',
-                  fontFamily: 'monospace',
-                  marginTop: '2px',
-                }}
-              >
-                {content.subtitle}
-              </div>
-            </div>
+                {link.label} ↗
+              </a>
+            ))}
           </div>
-          <button
-            onClick={closeModal}
-            style={{
-              background: 'rgba(255,255,255,0.06)',
-              border: '1px solid rgba(200,164,100,0.3)',
-              borderRadius: '6px',
-              color: '#c8a464',
-              width: '30px',
-              height: '30px',
-              cursor: 'pointer',
-              fontSize: '16px',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-            }}
-          >
-            ×
-          </button>
-        </div>
+        )}
 
-        {/* Body */}
-        <div style={{ padding: '20px 22px' }}>
-          <pre
-            style={{
-              fontFamily: 'monospace',
-              fontSize: '14px',
-              color: '#d8c8a8',
-              lineHeight: 1.75,
-              whiteSpace: 'pre-wrap',
-              margin: 0,
-            }}
-          >
-            {content.body}
-          </pre>
-
-          {content.links && content.links.length > 0 && (
-            <div
-              style={{
-                marginTop: '20px',
-                paddingTop: '16px',
-                borderTop: '1px solid rgba(200,164,100,0.18)',
-                display: 'flex',
-                flexWrap: 'wrap',
-                gap: '10px',
-              }}
-            >
-              {content.links.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  target='_blank'
-                  rel='noopener noreferrer'
-                  style={{
-                    display: 'inline-flex',
-                    alignItems: 'center',
-                    padding: '7px 16px',
-                    background: 'rgba(200,164,100,0.12)',
-                    border: '1px solid rgba(200,164,100,0.35)',
-                    borderRadius: '6px',
-                    color: '#c8a464',
-                    fontFamily: 'monospace',
-                    fontSize: '13px',
-                    textDecoration: 'none',
-                    cursor: 'pointer',
-                    transition: 'background 0.15s',
-                  }}
-                  onMouseEnter={(e) =>
-                    (e.currentTarget.style.background = 'rgba(200,164,100,0.22)')
-                  }
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.background = 'rgba(200,164,100,0.12)')
-                  }
-                >
-                  {link.label}
-                </a>
-              ))}
-            </div>
-          )}
-        </div>
-
-        {/* Footer hint */}
-        <div
-          style={{
-            borderTop: '1px solid rgba(200,164,100,0.15)',
-            padding: '10px 22px',
-            display: 'flex',
-            justifyContent: 'flex-end',
-          }}
-        >
-          <span style={{ fontSize: '12px', color: '#6a5840', fontFamily: 'monospace' }}>
-            ESC or click outside to close
-          </span>
+        {/* Close hint */}
+        <div style={{
+          marginTop: '28px',
+          fontSize: '11px',
+          color: '#b09878',
+          textAlign: 'right',
+          fontStyle: 'italic',
+        }}>
+          ESC 또는 바깥 클릭으로 닫기
         </div>
       </div>
     </div>
