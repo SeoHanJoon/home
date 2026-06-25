@@ -21,9 +21,9 @@ export function CameraController() {
       const config = FURNITURE_CONFIGS.find((f) => f.id === activeModal)
       if (config) {
         const [fx, fy, fz] = config.position
-        // Zoom to a position above and slightly south of the furniture.
-        // y=5 clears all walls (max wall height 3) so no geometry clips the view.
-        camTarget.current.set(fx, 5, fz + 3)
+        // Camera moves to player eye level and looks toward the furniture —
+        // gives a character-POV feel as if the player is reading a note on it.
+        camTarget.current.set(playerX, 1.6, playerZ)
         camera.position.lerp(camTarget.current, ZOOM_LERP)
         camera.lookAt(fx, fy + 0.8, fz)
         return

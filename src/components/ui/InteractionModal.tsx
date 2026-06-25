@@ -32,8 +32,8 @@ export function InteractionModal() {
         display: 'flex',
         alignItems: 'center',
         justifyContent: 'center',
-        background: 'rgba(8,5,2,0.58)',
-        backdropFilter: 'blur(4px)',
+        background: 'rgba(240, 224, 188, 0.88)',
+        backdropFilter: 'blur(10px)',
         animation: 'dimIn 0.4s ease forwards',
       }}
       onClick={closeModal}
