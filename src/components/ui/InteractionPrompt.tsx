@@ -5,15 +5,31 @@ import { FURNITURE_CONFIGS } from '@/data/gameConfig'
 
 export function InteractionPrompt() {
   const nearbyFurniture = useGameStore((s) => s.nearbyFurniture)
-  const activeModal = useGameStore((s) => s.activeModal)
+  const activeModal     = useGameStore((s) => s.activeModal)
 
-  if (!nearbyFurniture || activeModal) return null
+  // Unmount only when not near any furniture.
+  // While modal is open, keep in DOM so the slide-out transition plays.
+  if (!nearbyFurniture) return null
 
   const furniture = FURNITURE_CONFIGS.find((f) => f.id === nearbyFurniture)
   if (!furniture) return null
 
   return (
-    <div className='fixed bottom-8 left-1/2 -translate-x-1/2 pointer-events-none select-none z-10'>
+    <div
+      style={{
+        position: 'fixed',
+        bottom: '32px',
+        left: '50%',
+        pointerEvents: 'none',
+        userSelect: 'none',
+        zIndex: 10,
+        transition: 'transform 0.42s cubic-bezier(0.4,0,0.2,1), opacity 0.38s ease',
+        transform: activeModal
+          ? 'translateX(-50%) translateY(calc(100% + 48px))'
+          : 'translateX(-50%) translateY(0)',
+        opacity: activeModal ? 0 : 1,
+      }}
+    >
       <div
         style={{
           background: 'rgba(10,8,6,0.82)',

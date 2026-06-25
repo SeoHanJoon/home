@@ -1,9 +1,11 @@
 'use client'
 
 import { useState } from 'react'
+import { useGameStore } from '@/store/gameStore'
 
 export function ControlsGuide() {
   const [dismissed, setDismissed] = useState(false)
+  const activeModal = useGameStore((s) => s.activeModal)
 
   if (dismissed) return null
 
@@ -20,6 +22,9 @@ export function ControlsGuide() {
         zIndex: 10,
         backdropFilter: 'blur(4px)',
         minWidth: '180px',
+        transition: 'transform 0.42s cubic-bezier(0.4,0,0.2,1), opacity 0.38s ease',
+        transform: activeModal ? 'translateX(calc(-100% - 40px))' : 'translateX(0)',
+        opacity: activeModal ? 0 : 1,
       }}
     >
       <div
@@ -44,12 +49,7 @@ export function ControlsGuide() {
       ].map(([key, desc]) => (
         <div
           key={key}
-          style={{
-            display: 'flex',
-            alignItems: 'center',
-            gap: '10px',
-            marginBottom: '6px',
-          }}
+          style={{ display: 'flex', alignItems: 'center', gap: '10px', marginBottom: '6px' }}
         >
           <span
             style={{
